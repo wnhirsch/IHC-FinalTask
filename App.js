@@ -33,26 +33,64 @@ import {
 import WinesService from './WinesService';
 
 const App: () => React$Node = () => {
-  const [wines, setWines] = useState([]);
+    const minhaLista = [  {
+              "nome" : "Hamburguer Picanha",
+              "imgUrl" : "https://static.carrefour.com.br/medias/sys_master/images/images/hbe/hd9/h00/h00/10786591932446.jpg",
+              "tipo" : "Congelados",
+              "corredor" : 6.0
+          },
+          {
+              "nome" : "Camarão",
+              "imgUrl" : "https://static.carrefour.com.br/medias/sys_master/images/images/hb2/h51/h00/h00/11120881827870.jpg",
+              "tipo" : "Congelados",
+              "corredor" : 6.0
+          },
+          {
+              "nome" : "Hamburguer Picanha",
+              "imgUrl" : "https://static.carrefour.com.br/medias/sys_master/images/images/hbe/hd9/h00/h00/10786591932446.jpg",
+              "tipo" : "Congelados",
+              "corredor" : 6.0
+          },
+          {
+              "nome" : "Maçã",
+              "imgUrl" : "https://static.carrefour.com.br/medias/sys_master/images/images/he0/hdd/h00/h00/10135282515998.jpg",
+              "tipo" : "Frutas",
+              "corredor" : 5.0
+          },
+          {
+              "nome" : "Coca-Cola",
+              "imgUrl" : "https://static.carrefour.com.br/medias/sys_master/images/images/hd6/hf7/h00/h00/9230973435934.jpg",
+              "tipo" : "Bebidas",
+              "corredor" : 1.0
+          }];
+  const [wines, setWines] = useState(minhaLista);
   const [textFilter, setTextFilter] = useState('')
   const [error, setError] = useState(false);
   const [checkBox, setCheckBox] = useState(false);
 
+
+
   const listWines = () => wines.map(wine =>
   
   <>
-  <View style={styles.cardView} key={wine.id}>
+  <View style={styles.cardView}>
+        <Image
+                    style={{width: 50, height: 75 }}
+                    source={{uri: wine.imgUrl}}
+                    />
   <View  style={styles.cardText}>
-    <Text style={{fontWeight: 'bold', fontSize:15}}> Nome:<Text style={{color: '#FF3244', fontSize:15}}>{wine.name}</Text> </Text>
-    <Text style={{fontWeight: 'bold', fontSize:15}}> País:<Text style={{color: '#FF3244', fontSize:15}}>{wine.country}</Text> </Text>
-    <Text style={{fontWeight: 'bold', fontSize:15}}> Ano:<Text style={{color: '#FF3244', fontSize:15}}>{wine.year}</Text> </Text>
-    <Text style={{fontWeight: 'bold', fontSize:15}}> Preço: $<Text style={{color: '#FF3244', fontSize:15}}>{wine.price}</Text> </Text>
+    <Text style={{fontWeight: 'bold', fontSize:15}}> Nome:<Text style={{color: '#FF3244', fontSize:15}}>{wine.nome}</Text> </Text>
+    <Text style={{fontWeight: 'bold', fontSize:15}}> Tipo:<Text style={{color: '#FF3244', fontSize:15}}>{wine.tipo}</Text> </Text>
   </View>
 
-    <Image
-            style={{width: 50, height: 200 }}
-            source={{uri: wine.imgUrl}}
-            />
+  </View>
+
+  <View>
+        <Button
+           color='#810012'
+         style= {styles.buttonList}
+         title="Adicionar a Lista"
+       />
   </View>
 
   </>
@@ -69,7 +107,7 @@ const App: () => React$Node = () => {
   }
 
   const listAllWines = () => {
-    WinesService.getAllWines().then((response) => {
+    WinesService.getMyList().then((response) => {
       console.warn(response);
       setWines(response);
       setError(false);
@@ -84,11 +122,7 @@ const App: () => React$Node = () => {
       <SafeAreaView>
         <ScrollView
           style={styles.scrollView}>
-          <View>
 
-
-          </View>
-          
           <View
           style={styles.textInput}>
           <TextInput
@@ -99,20 +133,92 @@ const App: () => React$Node = () => {
           numberOfLines={1}
           />
           </View>
+
+           <View style={styles.body2}>
+
+              <Button
+                color='#04941f'
+                style= {styles.buttonList}
+                title="Bebidas"
+                onPress={() => listWines()}
+              />
+
+              <Button
+                  color='#04941f'
+                  style= {styles.buttonList}
+                  title="Cuidados Pessoais"
+                  onPress={() => listWines()}
+              />
+
+              <Button
+                color='#04941f'
+                style= {styles.buttonList}
+                title="Cuidados com Roupas"
+                onPress={() => listWines()}
+            />
+            </View>
+
+             <View style={styles.body2}>
+
+            <Button
+                color='#04941f'
+                style= {styles.buttonList}
+                title="Biscoitos"
+                onPress={() => listWines()}
+            />
+
+            <Button
+                color='#04941f'
+                style= {styles.buttonList}
+                title="Doces"
+                onPress={() => listWines()}
+            />
+
+          <Button
+             color='#04941f'
+             style= {styles.buttonList}
+             title="Massas"
+             onPress={() => listWines()}
+         />
+
+         <Button
+              color='#04941f'
+              style= {styles.buttonList}
+              title="Molhos"
+              onPress={() => listWines()}
+          />
+
+          <Button
+                color='#04941f'
+                style= {styles.buttonList}
+                title="Frutas"
+                onPress={() => listWines()}
+            />
+
+           </View>
+
+           <View style={styles.body2}>
+           <Button
+               color='#04941f'
+               style= {styles.buttonList}
+               title="Congelados"
+               onPress={() => listWines()}
+           />
+           </View>
+
           <View style={styles.body}>
             <Button
             color='#810012'
           style= {styles.buttonList}
-          title="List Wines"
+          title="Minha Lista"
           onPress={() => listWines()}
         />
                     <Button
             color='#810012'
           style= {styles.buttonList}
-          title="Search "
+          title="Gerar Caminho "
           onPress={() => listAllWines()}
         />
-          <CheckBox value={checkBox} onChange={() => setCheckBox(!checkBox)} />
           </View>
           <View style={styles.cardText}>
 
@@ -146,6 +252,12 @@ const styles = StyleSheet.create({
   },
   body: {
     backgroundColor: '#810012',
+    flexDirection: 'row',
+    textAlign:'center',
+    alignItems:'center'
+  },
+  body2: {
+    backgroundColor: '#f5f5dc',
     flexDirection: 'row',
     textAlign:'center',
     alignItems:'center'
